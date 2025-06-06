@@ -47,11 +47,14 @@ jobs:
                 python -m pip install --upgrade pip
                 pip install -r requirements.txt
 
+            - name: Install PostgreSQL client
+              run: sudo apt-get update && sudo apt-get install -y postgresql-client
+
             - name: Wait for Postgres to be ready
               run: |
-                until pg_isready -h db -p 5432; do
+                until pg_isready -h $DB_HOST -p $DB_PORT -U $DB_USER; do
                 echo "Waiting for Postgres..."
-                sleep 5
+                sleep 2
                 done
 
 
